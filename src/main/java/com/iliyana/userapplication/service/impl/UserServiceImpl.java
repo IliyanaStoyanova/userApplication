@@ -3,6 +3,7 @@ package com.iliyana.userapplication.service.impl;
 import com.iliyana.userapplication.model.User;
 import com.iliyana.userapplication.repository.UserRepo;
 import com.iliyana.userapplication.service.UserService;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getUsers() {
         return userRepo.findAll();
+    }
+
+    @Override
+    public List<User> sortUsers(String field, String dir) {
+        return userRepo.findAll(Sort.by(Sort.Direction.fromString(dir), field));
     }
 
     @Override
