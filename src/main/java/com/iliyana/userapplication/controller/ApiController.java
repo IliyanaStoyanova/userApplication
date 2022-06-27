@@ -1,54 +1,43 @@
 package com.iliyana.userapplication.controller;
 
 import com.iliyana.userapplication.model.User;
-import com.iliyana.userapplication.repository.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.iliyana.userapplication.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/users")
 public class ApiController {
 
-    @Autowired
-    private UserRepo userRepo;
+    private final UserService userService;
 
-    @GetMapping(value = "/")
-    public String getPage() {
-        return "Welcome";
+    public ApiController(UserService userService) {
+        this.userService = userService;
     }
 
-    @GetMapping(value = "/users")
+    @GetMapping()
     public List<User> getUsers() {
-        return userRepo.findAll();
+        return userService.getUsers();
     }
 
-    @GetMapping(value = "/users/{id}")
+    @GetMapping(value = "/{id}")
     public User getUsersId(@PathVariable long id) {
-        return userRepo.findById(id).get();
+        return userService.getUsersId(id);
     }
-    @PostMapping(value = "/users")
+
+    @PostMapping()
     public String addUser(@RequestBody User user) {
-        userRepo.save(user);
-        return "Saved...";
+        return userService.addUser(user) ? "User added successfully" : "Something went wrong";
     }
 
-    @PutMapping(value = "/users/{id}")
+    @PutMapping(value = "/{id}")
     public String updateUser(@PathVariable long id, @RequestBody User user) {
-        User updatedUser = userRepo.findById(id).get();
-        updatedUser.setFirstName(user.getFirstName());
-        updatedUser.setLastName(user.getLastName());
-        updatedUser.setDateBirth(user.getDateBirth());
-        updatedUser.setPhoneNumber(user.getPhoneNumber());
-        updatedUser.setEmailAddress(user.getEmailAddress());
-        userRepo.save(updatedUser);
-        return "Updated...";
+        return userService.updateUser(id, user) ? "User updated successfully" : "Something went wrong!";
     }
 
-    @DeleteMapping(value = "/users/{id}")
+    @DeleteMapping(value = "/{id}")
     public String deleteUser(@PathVariable long id) {
-        User deleteUser = userRepo.findById(id).get();
-        userRepo.delete(deleteUser);
-        return "Delete user with the id: " + id;
+        return userService.deleteUser(id) ? "User deleted successfully " : "Something went wrong!";
     }
 }
