@@ -21,6 +21,10 @@ public class ApiController {
         return userService.getUsers();
     }
 
+    @GetMapping(value = "/sort")
+    public List<User> sortUsers(@RequestParam String field, @RequestParam String dir) {
+        return userService.sortUsers(field, dir);
+    }
     @GetMapping(value = "/{id}")
     public User getUsersId(@PathVariable long id) {
         return userService.getUsersId(id);

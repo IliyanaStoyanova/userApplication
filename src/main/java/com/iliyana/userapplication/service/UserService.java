@@ -7,6 +7,7 @@ import java.util.List;
 public interface UserService {
 
     List<User> getUsers();
+    List<User> sortUsers(String field, String dir);
     User getUsersId(long id);
     Boolean addUser(User user);
     Boolean updateUser(long id, User user);
