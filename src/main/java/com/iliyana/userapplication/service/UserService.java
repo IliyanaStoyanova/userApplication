@@ -10,7 +10,7 @@ public interface UserService {
     List<User> getUsers();
     List<User> filterUsers(String item, Sort sort);
     User getUsersId(long id);
-    Boolean addUser(User user);
-    Boolean updateUser(long id, User user);
-    Boolean deleteUser(long id);
+    User addUser(User user);
+    User updateUser(long id, User user);
+    void deleteUser(long id);
 }

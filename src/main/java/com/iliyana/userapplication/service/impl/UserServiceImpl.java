@@ -32,27 +32,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean addUser(User user) {
-        userRepo.save(user);
-        return true;
+    public User addUser(User user) {
+        return userRepo.save(user);
     }
 
     @Override
-    public Boolean updateUser(long id, User user) {
+    public User updateUser(long id, User user) {
         User updatedUser = userRepo.findById(id).get();
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
         updatedUser.setDateBirth(user.getDateBirth());
         updatedUser.setPhoneNumber(user.getPhoneNumber());
         updatedUser.setEmailAddress(user.getEmailAddress());
-        userRepo.save(updatedUser);
-        return true;
+        return userRepo.save(updatedUser);
     }
 
     @Override
-    public Boolean deleteUser(long id) {
-        User deleteUser = userRepo.findById(id).get();
-        userRepo.delete(deleteUser);
-        return true;
+    public void deleteUser(long id) {
+        userRepo.deleteById(id);
     }
 }

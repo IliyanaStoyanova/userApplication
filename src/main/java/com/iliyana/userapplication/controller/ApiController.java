@@ -35,17 +35,17 @@ public class ApiController {
     }
 
     @PostMapping()
-    public String addUser(@RequestBody User user) {
-        return userService.addUser(user) ? "User added successfully" : "Something went wrong";
+    public User addUser(@RequestBody User user) {
+        return userService.addUser(user);
     }
 
     @PutMapping(value = "/{id}")
-    public String updateUser(@PathVariable long id, @RequestBody User user) {
-        return userService.updateUser(id, user) ? "User updated successfully" : "Something went wrong!";
+    public User updateUser(@PathVariable long id, @RequestBody User user) {
+        return userService.updateUser(id, user);
     }
 
     @DeleteMapping(value = "/{id}")
-    public String deleteUser(@PathVariable long id) {
-        return userService.deleteUser(id) ? "User deleted successfully " : "Something went wrong!";
+    public void deleteUser(@PathVariable long id) {
+        userService.deleteUser(id);
     }
 }
