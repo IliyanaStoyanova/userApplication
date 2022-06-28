@@ -2,6 +2,7 @@ package com.iliyana.userapplication.controller;
 
 import com.iliyana.userapplication.model.User;
 import com.iliyana.userapplication.service.UserService;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,11 +22,13 @@ public class ApiController {
         return userService.getUsers();
     }
 
-    @GetMapping(value = "/sort")
-    public List<User> sortUsers(@RequestParam(required = false, defaultValue = "id") String field,
-                                @RequestParam(required = false, defaultValue = "asc") String dir) {
-        return userService.sortUsers(field, dir);
+    @GetMapping(value = "/filter")
+    public List<User> filterUsers(@RequestParam(required = false, defaultValue = "") String item,
+                               @RequestParam(required = false, defaultValue = "id") String field,
+                               @RequestParam(required = false, defaultValue = "asc") String dir) {
+        return userService.filterUsers(item, Sort.by(Sort.Direction.fromString(dir), field));
     }
+
     @GetMapping(value = "/{id}")
     public User getUsersId(@PathVariable long id) {
         return userService.getUsersId(id);
