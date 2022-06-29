@@ -1,20 +1,20 @@
 **The application has the following structure:**
-+ src
-  + main
-    + java
-      + com.iliyana.userapplication
-        + controller
-          + ApiController.java
-        + model 
-          + User.java
-        + repository
-          + UserRepo.java
-        + service
-          + impl
-            + UserServiceImpl.java
-          + UserService.java
-    + resources
-      + application.properties - усернаме и парола на MySQL installation
+- src
+  - main
+    - java
+      - com.iliyana.userapplication
+        - controller
+          - ApiController.java
+          - model 
+            - User.java
+          - repository
+            - UserRepo.java
+          - service
+            - impl
+              - UserServiceImpl.java
+              - UserService.java
+    - resources
+      - application.properties - username and password as per your MySQL installation
 
 **Application features:**
 1. Reading all the users. 
@@ -93,29 +93,29 @@
           - input - User Object
           - use save function from UserRepo -> CrudRepository
           - output - User Object
-        ```bash
-        @Override
-        public User addUser(User user) {
-           return userRepo.save(user);
-        }
-        ```
+      ```bash
+       @Override
+       public User addUser(User user) {
+          return userRepo.save(user);
+       }
+      ```
         function in ApiController:
           - `post method - /users`
           - call addUser - function from the service and return inserted User Object
           - input param - request body User object
-        ```bash
+      ```bash
         @PostMapping()
         public User addUser(@RequestBody User user) {
            return userService.addUser(user);
         }
-        ```
+      ```
 5. Updating a user.
     We create these functions:
        function in UserServiceImpl: updateUser(long id, User user)
           - input - user id, User Object
           - use save function from UserRepo -> CrudRepository
           - output - User Object
-       ```bash
+     ```bash
        @Override
        public User updateUser(long id, User user) {
            User updatedUser = userRepo.findById(id).get();
@@ -126,7 +126,7 @@
            updatedUser.setEmailAddress(user.getEmailAddress());
           return userRepo.save(updatedUser);
        }
-       ```
+    ```
        function in ApiController:
          - `put method - /users/id`
          - call updateUser - input user id, request body User object with information for update
@@ -141,21 +141,21 @@
         function in UserServiceImpl: deleteUser(long id) 
             - input - user id 
             - call deleteById from UserRepo
-        ```bash
+    ```bash
         @Override
         public void deleteUser(long id) {
             userRepo.deleteById(id);
         }
-        ```
+    ```
        function in ApiController:
             - `delete method - /users/id`
             - call deleteById from UserRepo - input user id
-       ```bash
+    ```bash
        @DeleteMapping(value = "/{id}")
        public void deleteUser(@PathVariable long id) {
            userService.deleteUser(id);
        }
-       ```
+    ```
 
 **Description of the files:**
 1. **controller/ApiController** -> controller describe all request mapping.
