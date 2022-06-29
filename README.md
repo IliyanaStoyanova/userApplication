@@ -2,7 +2,7 @@
 Build REST CRUD API for a simple User Management application using Spring Boot, Maven, MySQL, IntelliJ IDE.
 
 **You can see the full condition of the task in the <b><a href="https://github.com/users/IliyanaStoyanova/projects/7">Projects section</a></b>.**
-
+**You can see the application documentation in the <b><a href="https://github.com/IliyanaStoyanova/userApplication/blob/master/API_DOC.md">API_DOC.md</a></b>**
 ## Using versions
 
 1. Java 18
