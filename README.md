@@ -52,5 +52,14 @@ The app defines following CRUD APIs.
     PUT /users/{id}
     
     DELETE /users/{id}
+
+For POST and PUT methods JSON Request Body is:
     
-These HTTP methods can be tested using Postman at the moment.
+    {
+      "firstName": "<FIRST_NAME>",
+      "lastName": "<LAST_NAME>",
+      "dateBirth": "<YYYY-MM-DD>",
+      "phoneNumber": "<PHONE_NUMBER>",
+      "emailAddress": "<EMAIL_ADDRESS>"
+    }
+These HTTP methods can be tested using Postman.
