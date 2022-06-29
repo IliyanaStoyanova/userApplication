@@ -36,7 +36,7 @@ In terminal you write code:
 mvn spring-boot:run
 ```
 
-The app will start running at <http://localhost:8080>
+The app will start running at <http://localhost:8080/users>
 
 ## Explore Rest APIs
 The app defines following CRUD APIs.
