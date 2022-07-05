@@ -1,8 +1,11 @@
 package com.iliyana.userapplication.controller;
 
+import com.iliyana.userapplication.exception.UserGenerateException;
 import com.iliyana.userapplication.model.User;
 import com.iliyana.userapplication.service.UserService;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,8 +21,8 @@ public class ApiController {
     }
 
     @GetMapping()
-    public List<User> getUsers() {
-        return userService.getUsers();
+    public ResponseEntity<List<User>> getUsers() {
+        return new ResponseEntity(userService.getUsers(), HttpStatus.OK);
     }
 
     @GetMapping(value = "/filter")
@@ -30,22 +33,39 @@ public class ApiController {
     }
 
     @GetMapping(value = "/{id}")
-    public User getUsersId(@PathVariable long id) {
-        return userService.getUsersId(id);
+    public ResponseEntity getUsersId(@PathVariable long id){
+        try {
+            return new ResponseEntity(userService.getUsersId(id), HttpStatus.OK);
+        }catch(UserGenerateException userGenerateException) {
+            return new ResponseEntity(userGenerateException.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping()
-    public User addUser(@RequestBody User user) {
-        return userService.addUser(user);
+    public ResponseEntity<User> addUser(@RequestBody User user) {
+        try {
+            return new ResponseEntity<>(userService.addUser(user), HttpStatus.CREATED);
+        }catch (UserGenerateException userGenerateException) {
+            return new ResponseEntity(userGenerateException.getMessage(), HttpStatus.CONFLICT);
+        }
     }
 
     @PutMapping(value = "/{id}")
-    public User updateUser(@PathVariable long id, @RequestBody User user) {
-        return userService.updateUser(id, user);
+    public ResponseEntity<User> updateUser(@PathVariable long id, @RequestBody User user) {
+        try {
+            return new ResponseEntity(userService.updateUser(id, user), HttpStatus.OK);
+        }catch (UserGenerateException userGenerateException) {
+            return new ResponseEntity(userGenerateException.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteUser(@PathVariable long id) {
-        userService.deleteUser(id);
+    public ResponseEntity<Void> deleteUser(@PathVariable long id) {
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.ok().build();
+        }catch (UserGenerateException userGenerateException) {
+            return new ResponseEntity(userGenerateException.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }

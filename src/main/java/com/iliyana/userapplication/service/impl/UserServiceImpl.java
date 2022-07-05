@@ -1,5 +1,6 @@
 package com.iliyana.userapplication.service.impl;
 
+import com.iliyana.userapplication.exception.UserGenerateException;
 import com.iliyana.userapplication.model.User;
 import com.iliyana.userapplication.repository.UserRepo;
 import com.iliyana.userapplication.service.UserService;
@@ -28,16 +29,25 @@ public class UserServiceImpl implements UserService {
     }
     @Override
     public User getUsersId(long id) {
+        if(userRepo.findById(id).isEmpty()) {
+            throw new UserGenerateException("User NOT FOUND");
+        }
         return userRepo.findById(id).get();
     }
 
     @Override
     public User addUser(User user) {
+        if(userRepo.existsByEmailAddress(user.getEmailAddress())) {
+            throw new UserGenerateException("The User EXISTS!");
+        }
         return userRepo.save(user);
     }
 
     @Override
     public User updateUser(long id, User user) {
+        if(userRepo.findById(id).isEmpty()) {
+            throw new UserGenerateException("User NOT FOUND");
+        }
         User updatedUser = userRepo.findById(id).get();
         updatedUser.setFirstName(user.getFirstName());
         updatedUser.setLastName(user.getLastName());
@@ -49,6 +59,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(long id) {
+        if(userRepo.findById(id).isEmpty()) {
+            throw new UserGenerateException("User NOT FOUND");
+        }
         userRepo.deleteById(id);
     }
 }

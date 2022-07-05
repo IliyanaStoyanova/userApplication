@@ -13,4 +13,13 @@ public interface UserRepo extends JpaRepository<User, Long> {
             " WHERE u.firstName LIKE CONCAT('%',:item, '%')" +
             " OR u.lastName LIKE CONCAT('%', :item, '%')")
     List<User> filterUsers(String item, Sort sort);
+
+    @Query("SELECT " +
+            "CASE " +
+            "WHEN COUNT(u) > 0 THEN 'true' " +
+            "ELSE 'false' " +
+            "END " +
+            "FROM User u " +
+            "WHERE u.emailAddress= :emailAddress")
+    Boolean existsByEmailAddress(String emailAddress);
 }
